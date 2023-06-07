@@ -17,7 +17,10 @@ export default function SingUp() {
   const [error, setError] = useState("");
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
-  const HandelSubmission = () =>{
+  const HandelSubmission =async (e) =>{
+      e.preventDefault() 
+      const{password,email,name}=value;
+
     if (!value.name || !value.email || !value.password) {
       setError("fill all fields");
       return;
@@ -40,6 +43,18 @@ export default function SingUp() {
     .catch((err)=>{
       setSubmitButtonDis(false);
       setError(err.message);
+    })
+
+    const res = await fetch("https://fairbas-auth-1-default-rtdb.firebaseio.com/userSingup.json",{
+      method: 'POST',
+      headers:{
+        'content-type':'application/json'
+      },
+      body:JSON.stringify({
+        password,
+        email,
+        name
+      })
     })
   };
 

@@ -18,7 +18,9 @@ export default function Login() {
   const [error, setError] = useState("");
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
-  const HandelSubmission = async() =>{
+  const HandelSubmission = async(e) =>{
+        e.preventDefault()
+        const{password,email}=value;
 
     if ( !value.email || !value.password) {
       setError("fill all fields");
@@ -40,6 +42,17 @@ export default function Login() {
       setSubmitButtonDis(false);
       setError(err.message);
       console.log(setError);
+    })
+
+    const res = await fetch("https://fairbas-auth-1-default-rtdb.firebaseio.com/userform.json",{
+      method: 'POST',
+      headers:{
+        'content-type':'application/json'
+      },
+      body:JSON.stringify({
+        password,
+        email
+      })
     })
   };
 
