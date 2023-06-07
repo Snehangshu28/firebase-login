@@ -3,6 +3,7 @@ import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, provider } from "./Firebase"
 import { signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup,GoogleAuthProvider , signInWithRedirect} from "firebase/auth";
+import LinearIndeterminate from './mui/LinearIndeterminate';
 
 
 
@@ -44,7 +45,7 @@ export default function Login() {
       console.log(setError);
     })
 
-    const res = await fetch("https://fairbas-auth-1-default-rtdb.firebaseio.com/userform.json",{
+    const res = await fetch("https://fairbas-auth-1-default-rtdb.firebaseio.com/userLogin.json",{
       method: 'POST',
       headers:{
         'content-type':'application/json'
@@ -73,8 +74,10 @@ export default function Login() {
   useEffect(()=>{
     setValue(localStorage.getItem('email'))
   },[])
+
   return (
     <>
+    <LinearIndeterminate/>
     <div className='container'>
         <div className='inner-box'>
           <h1 className='heading'>Login</h1>
@@ -92,9 +95,9 @@ export default function Login() {
           </label>
           <div className='btn'>
           <b className='err'>{error}</b>
-            <button onClick={HandelSubmission} disabled={submitButtonDis}>Login</button>
+            <button onClick={HandelSubmission} disabled={submitButtonDis} use={HandelSubmission}>Login</button>
             <p className='p-or'>or</p>
-              <button className='gogl' onClick={loginGoogle}>Google</button>
+              <button className='gogl' onClick={loginGoogle} >Google</button>
             </div>
             <p>
               Don't have an Account?{''}
