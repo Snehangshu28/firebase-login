@@ -19,7 +19,7 @@ export default function SingUp() {
 
   const HandelSubmission =async (e) =>{
       e.preventDefault() 
-      const{password,email,name}=value;
+      const{email,name}=value;
 
     if (!value.name || !value.email || !value.password) {
       setError("fill all fields");
@@ -51,7 +51,6 @@ export default function SingUp() {
         'content-type':'application/json'
       },
       body:JSON.stringify({
-        password,
         email,
         name
       })

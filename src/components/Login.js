@@ -15,13 +15,13 @@ export default function Login() {
     email: "",
     password: ""
   })
-
+ 
   const [error, setError] = useState("");
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
   const HandelSubmission = async(e) =>{
         e.preventDefault()
-        const{password,email}=value;
+        const{email}=value;
 
     if ( !value.email || !value.password) {
       setError("fill all fields");
@@ -51,7 +51,6 @@ export default function Login() {
         'content-type':'application/json'
       },
       body:JSON.stringify({
-        password,
         email
       })
     })
@@ -77,7 +76,9 @@ export default function Login() {
 
   return (
     <>
-    <LinearIndeterminate/>
+       <div className='lineindeter'>
+          <LinearIndeterminate/>
+       </div>
     <div className='container'>
         <div className='inner-box'>
           <h1 className='heading'>Login</h1>

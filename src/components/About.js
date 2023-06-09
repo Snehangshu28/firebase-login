@@ -14,6 +14,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PeopleIcon from '@mui/icons-material/People';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountMenu from './mui/AccountMenu';
 
 
 export default function About(props) {
@@ -40,11 +41,12 @@ export default function About(props) {
                 <button className='ser-btn'><SearchIcon/></button>
             </div>
             <div className='obj'>
-                <div>profile</div>
-                <Link to="/contact"><div className='cnt'>contact us</div></Link>
                 <Link to="/login"><div className='cnt'>log-in</div></Link> 
                <div className='profile-logout' onClick={deleteUser}>Log-Out</div>
-               <div className='profile'><FallbackAvatars/></div>
+               {/* <div className='profile'>
+                    <FallbackAvatars/>
+               </div> */}
+               <div><AccountMenu/></div>
             </div>
         </div>
         <div className='main-container'>
@@ -60,14 +62,14 @@ export default function About(props) {
             <div className='game-list'>
             <div className="grid-container">
                     <div className="grid-item">1</div>
-                    <div className="grid-item">2</div>
-                    <div className="grid-item">3</div>  
-                    <div className="grid-item">4</div>
-                    <div className="grid-item">5</div>
-                    <div className="grid-item">6</div>  
-                    <div className="grid-item">7</div>
-                    <div className="grid-item">8</div>
-                    <div className="grid-item">9</div>  
+                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>  
+                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>  
+                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>  
             </div>
             </div>
             <div className='login-user'> </div>
