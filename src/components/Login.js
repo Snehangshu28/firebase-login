@@ -1,9 +1,10 @@
 import React, { useEffect, useState }  from 'react'
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, provider } from "./Firebase"
+import { auth, provider, database } from "./Firebase"
 import { signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup,GoogleAuthProvider , signInWithRedirect} from "firebase/auth";
 import LinearIndeterminate from './mui/LinearIndeterminate';
+import { ref, set } from "firebase/database";
 
 
 
@@ -19,6 +20,18 @@ export default function Login() {
   const [error, setError] = useState("");
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
+  const updateUserCollection = ({displayName, uid, email, photoURL}) => {
+    set(ref(database, 'userLogin/' + uid), {
+      uid,
+      displayName,
+      email,
+      photoURL,
+      lastLogin: Date.now(),
+      loggedin: true
+    });
+  }
+
+
   const HandelSubmission = async(e) =>{
         e.preventDefault()
         const{email}=value;
@@ -28,31 +41,17 @@ export default function Login() {
       return;
     }
     setError("")
-    console.log(value);
-
     setSubmitButtonDis(true)
 
     signInWithEmailAndPassword(auth, value.email, value.password).then(async(res)=>{
       setSubmitButtonDis(false);
       localStorage.setItem("email",res.user.email);
-
-     naviget("/")
-
+      updateUserCollection(res.user)
+      naviget("/")
     })
     .catch((err)=>{
       setSubmitButtonDis(false);
       setError(err.message);
-      console.log(setError);
-    })
-
-    const res = await fetch("https://fairbas-auth-1-default-rtdb.firebaseio.com/userLogin.json",{
-      method: 'POST',
-      headers:{
-        'content-type':'application/json'
-      },
-      body:JSON.stringify({
-        email
-      })
     })
   };
 
@@ -63,8 +62,6 @@ export default function Login() {
     .then((res) => {
           setValue(res.user.email)
           localStorage.setItem("email",res.user.email);
-
-
     }).catch((error) => {
 
     });
@@ -107,7 +104,7 @@ export default function Login() {
               </span>
             </p>
           </div>
-          </div>  
+        </div>  
    
   </>
   )
