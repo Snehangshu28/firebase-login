@@ -29,7 +29,6 @@ export default function AccountMenu() {
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Link to="/contact"><Typography sx={{ minWidth: 100 }}>Contact</Typography> </Link>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
