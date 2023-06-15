@@ -5,10 +5,13 @@ import { auth, provider, database } from "./Firebase"
 import { signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup,GoogleAuthProvider , signInWithRedirect} from "firebase/auth";
 import LinearIndeterminate from './mui/LinearIndeterminate';
 import { ref, set } from "firebase/database";
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
 
 export default function Login() {
+
+  const [user, setUser] = useLocalStorage();
 
 
   const naviget = useNavigate();
@@ -21,20 +24,30 @@ export default function Login() {
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
   const updateUserCollection = ({displayName, uid, email, photoURL}) => {
-    set(ref(database, 'userLogin/' + uid), {
+    const userData = {
       uid,
       displayName,
       email,
       photoURL,
       lastLogin: Date.now(),
       loggedin: true
-    });
+    }
+    set(ref(database, 'userLogin/' + uid), userData).then(() => {
+      setUser(userData)
+    })
   }
+
+  useEffect(()=>{
+    if(user){
+    naviget('/')
+    }
+  },[user])
+
+  
 
 
   const HandelSubmission = async(e) =>{
-        e.preventDefault()
-        const{email}=value;
+    e.preventDefault()
 
     if ( !value.email || !value.password) {
       setError("fill all fields");
@@ -45,25 +58,24 @@ export default function Login() {
 
     signInWithEmailAndPassword(auth, value.email, value.password).then(async(res)=>{
       setSubmitButtonDis(false);
-      localStorage.setItem("email",res.user.email);
+      localStorage.setItem("email", value.email);
       updateUserCollection(res.user)
-      naviget("/")
     })
     .catch((err)=>{
       setSubmitButtonDis(false);
       setError(err.message);
     })
   };
+  
 
   //google login
 
   const loginGoogle = () =>{
     signInWithPopup(auth, provider)
-    .then((res) => {
-          setValue(res.user.email)
-          localStorage.setItem("email",res.user.email);
-    }).catch((error) => {
-
+      .then((res) => {
+            setValue(res.user.email)
+            localStorage.setItem("email",res.user.email);
+      }).catch((error) => {
     });
   }
 
@@ -105,7 +117,6 @@ export default function Login() {
             </p>
           </div>
         </div>  
-   
   </>
   )
 }

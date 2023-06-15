@@ -4,7 +4,6 @@ import { auth, database } from "./Firebase"
 import { signOut } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "./hand.png";
-import { ref, onValue, set } from "firebase/database";
 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ExtensionIcon from '@mui/icons-material/Extension';
@@ -15,25 +14,16 @@ import PeopleIcon from '@mui/icons-material/People';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountMenu from './mui/AccountMenu';
+import ChatBox from './chatBox/ChatBox';
 
 
 export default function About(props) {
 
-    const [users, setUsers] = useState([]);
     const [openBox, setOpenBox] = useState(true);
 
     const naviget = useNavigate();
 
-    // const updateUserCollection = ({displayName, uid, email, photoURL}) => {
-    //     set(ref(database, 'userLogin/' + uid), {
-    //       uid,
-    //       displayName,
-    //       email,
-    //       photoURL,
-    //       lastLogin: Date.now(),
-    //       loggedin: false
-    //     });
-    //   }
+    
 
     const deleteUser = () => {
         console.log("click");
@@ -46,22 +36,6 @@ export default function About(props) {
             });
     }
 
-
-    useEffect(() => {
-        const recentRef = ref(database, 'userLogin')
-        onValue(recentRef, (snapshot) => {
-            if(snapshot.exists()) {
-                const res = snapshot.val()
-                const data = Object.keys(res).map(id => {
-                    return {
-                        id,
-                        email: res[id].email
-                    }
-                })
-                setUsers(data)
-            }
-        });
-    }, [])
 
     const listedUser = () =>{
         console.log("click");
@@ -107,15 +81,9 @@ export default function About(props) {
             </div>
             </div>
             <div className='login-user'>
-                {
-                    users?.length && users.map((user) => (
-                        <div onClick={listedUser} key={user.id}>{user.email}</div>
-                    ))
-                }
+               <ChatBox/>
             </div>
-            <div className={openBox? 'chat-box1' : "chat-box2"}>
-                <button onClick={()=>{setOpenBox(true)}}>-</button>
-            </div>
+          
         </div>
      </>
     )
