@@ -39,8 +39,10 @@ export default function Login() {
 
   useEffect(()=>{
     if(user){
-    naviget('/')
     }
+    naviget('/login')
+
+    console.log(naviget);
   },[user])
 
   
@@ -81,7 +83,7 @@ export default function Login() {
 
   useEffect(()=>{
     setValue(localStorage.getItem('email'))
-  },[])
+  },[]) 
 
   return (
     <>

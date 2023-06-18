@@ -17,6 +17,7 @@ import AccountMenu from './mui/AccountMenu';
 import ChatBox from './chatBox/ChatBox';
 
 
+
 export default function About(props) {
 
     const [openBox, setOpenBox] = useState(true);
@@ -29,13 +30,14 @@ export default function About(props) {
         console.log("click");
             signOut(auth).then(() => {
                 // Sign-out successful.
-                naviget("/login") 
+                    naviget('/login')
                 
             }).catch((error) => {
                 // An error happened.
             });
     }
 
+    
 
     const listedUser = () =>{
         console.log("click");
@@ -76,7 +78,7 @@ export default function About(props) {
                     <div className="grid-item">1</div>
                     <div className="grid-item">1</div>  
                     <div className="grid-item">1</div>
-                    <div className="grid-item">1</div>
+                    <div className="grid-item">1</div>  
                     <div className="grid-item">1</div>  
             </div>
             </div>
