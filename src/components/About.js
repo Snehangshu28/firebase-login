@@ -15,10 +15,12 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountMenu from './mui/AccountMenu';
 import ChatBox from './chatBox/ChatBox';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
 
 export default function About(props) {
+    const [user, setUser] = useLocalStorage();
 
     const [openBox, setOpenBox] = useState(true);
 
@@ -30,7 +32,7 @@ export default function About(props) {
         console.log("click");
             signOut(auth).then(() => {
                 // Sign-out successful.
-                    naviget('/login')
+                setUser(null)
                 
             }).catch((error) => {
                 // An error happened.
@@ -44,6 +46,11 @@ export default function About(props) {
         setOpenBox(false)
     }
 
+    useEffect(()=>{
+        if(!user){
+          naviget('/login')
+        }
+      },[user])
 
     return (
         <>
@@ -83,7 +90,7 @@ export default function About(props) {
             </div>
             </div>
             <div className='login-user'>
-               <ChatBox/>
+               {/* <ChatBox/> */}
             </div>
           
         </div>

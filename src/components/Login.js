@@ -1,10 +1,10 @@
 import React, { useEffect, useState }  from 'react'
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, provider, database } from "./Firebase"
+import { auth, provider, db } from "./Firebase"
 import { signInWithEmailAndPassword, FacebookAuthProvider, signInWithPopup,GoogleAuthProvider , signInWithRedirect} from "firebase/auth";
 import LinearIndeterminate from './mui/LinearIndeterminate';
-import { ref, set } from "firebase/database";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
@@ -23,7 +23,17 @@ export default function Login() {
   const [error, setError] = useState("");
   const [submitButtonDis, setSubmitButtonDis]= useState(false)
 
-  const updateUserCollection = ({displayName, uid, email, photoURL}) => {
+  const [loginUsers, setLoginUsers] =useState([]);
+
+
+ 
+
+
+
+
+  
+
+  const updateUserCollection = async ({displayName, uid, email, photoURL}) => {
     const userData = {
       uid,
       displayName,
@@ -32,17 +42,15 @@ export default function Login() {
       lastLogin: Date.now(),
       loggedin: true
     }
-    set(ref(database, 'userLogin/' + uid), userData).then(() => {
-      setUser(userData)
-    })
+    const usersRef = collection(db, 'loginUsers');
+    await setDoc(doc(usersRef, uid), userData)
+    setUser(userData)
   }
 
   useEffect(()=>{
     if(user){
+      naviget('/')
     }
-    naviget('/login')
-
-    console.log(naviget);
   },[user])
 
   
@@ -62,6 +70,7 @@ export default function Login() {
       setSubmitButtonDis(false);
       localStorage.setItem("email", value.email);
       updateUserCollection(res.user)
+      
     })
     .catch((err)=>{
       setSubmitButtonDis(false);

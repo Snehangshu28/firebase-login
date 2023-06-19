@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { ref, onValue, set, push } from "firebase/database";
-import {  database } from "../Firebase";
+import {  db } from "../Firebase";
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 
@@ -14,7 +14,7 @@ export default function ChatBox() {
 
     
     useEffect(() => {
-        const recentRef = ref(database, 'userLogin')
+        const recentRef = ref(db, 'userLogin')
         onValue(recentRef, (snapshot) => {
             if(snapshot.exists()) {
                 const res = snapshot.val()
@@ -30,10 +30,6 @@ export default function ChatBox() {
     }, []);
 
 
-    const listedUser = () =>{
-        console.log("click");
-        setOpenBox(false)
-    }
 
     const personalChat = (userId) =>{
         const chanel = {
@@ -43,7 +39,7 @@ export default function ChatBox() {
             ]
         }
 
-        const chListRef = ref(database, 'chanel');
+        const chListRef = ref(db, 'chanel');
         const newChRef = push(chListRef);
         set(newChRef, chanel).then((res)=>{
             console.log(newChRef);

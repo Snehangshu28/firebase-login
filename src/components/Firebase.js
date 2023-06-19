@@ -1,11 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
+
 
 
 const firebaseConfig = {
   apiKey: "AIzaSyBBvduUogeiJNtlLcy8r633KkTA5xtTPGo",
   authDomain: "fairbas-auth-1.firebaseapp.com",
+  databaseURL: "https://fairbas-auth-1-default-rtdb.firebaseio.com",
   projectId: "fairbas-auth-1",
   storageBucket: "fairbas-auth-1.appspot.com",
   messagingSenderId: "112235738442",
@@ -16,12 +18,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-const database = getDatabase();
+const db = getFirestore(app);
 
 
 export{
     app,
     auth,
     provider,
-    database
+    db
 }
