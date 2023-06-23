@@ -25,14 +25,6 @@ export default function Login() {
 
   const [loginUsers, setLoginUsers] =useState([]);
 
-
- 
-
-
-
-
-  
-
   const updateUserCollection = async ({displayName, uid, email, photoURL}) => {
     const userData = {
       uid,

@@ -90,7 +90,7 @@ export default function About(props) {
             </div>
             </div>
             <div className='login-user'>
-               {/* <ChatBox/> */}
+               <ChatBox/>
             </div>
           
         </div>
