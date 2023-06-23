@@ -89,7 +89,7 @@ export default function ChatBox() {
         <div >
             {
                 users?.length && users.map((user) => (
-                    <div onClick={()=>personalChat(user.uid)}  key={user.uid}>{user.email}</div>
+                    <div onClick={()=>personalChat(user.uid)}  key={user.uid}>{user.displayName}</div>
                 ))
             }
         </div>
