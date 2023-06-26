@@ -62,7 +62,7 @@ export default function About(props) {
             </div>
             <div className='obj'>
                 <Link to="/login"><div className='cnt'>log-in</div></Link> 
-               <div className='profile-logout' onClick={deleteUser}>Log-Out</div>
+               {/* <div className='profile-logout' onClick={deleteUser}>Log-Out</div> */}
                <div className='main-pro'><AccountMenu/></div>
                <div>{user.displayName}</div>
             </div>

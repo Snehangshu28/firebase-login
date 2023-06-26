@@ -11,8 +11,9 @@ export default function ChatBox() {
     const [user] = useLocalStorage();
     const [users, setUsers] = useState([]);
     const [chats, setChats] = useState([]);
-    const [chanel, setChanel] = useState(null)
-    const [text, setText] = useState('')
+    const [chanel, setChanel] = useState(null);
+    const [text, setText] = useState('');
+    const [read, setRead] = useState(false)
 
 
     
@@ -32,6 +33,8 @@ export default function ChatBox() {
         console.log(chats.filter(ch => ch.id == chanel), chanel)
         
     }, [chats, chanel])
+
+    
 
     const personalChat = async(userId) =>{
         const chanel = {
@@ -84,11 +87,16 @@ export default function ChatBox() {
     setText('');
    }
 
+   const setNotifs = () =>{
+    
+   }
+   
+
   return (
     <>
         <div >
             {
-                users?.length && users.map((user) => (
+                 users?.length && users.map((user) => (
                     <div onClick={()=>personalChat(user.uid)}  key={user.uid}>{user.displayName}</div>
                 ))
             }

@@ -12,9 +12,19 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { signOut } from "firebase/auth";
+import { auth, database } from "../Firebase";
+import { useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
+
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [user, setUser] = useLocalStorage();
+  const naviget = useNavigate();
+
+
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,6 +33,24 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const deleteUser = () => {
+      console.log("click");
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUser(null)
+            
+        }).catch((error) => {
+            // An error happened.
+        });
+      }
+
+
+      useEffect(()=>{
+        if(!user){
+          naviget('/login')
+        }
+      },[user])
 
 
   return (
@@ -96,7 +124,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={deleteUser}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
